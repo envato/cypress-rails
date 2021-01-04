@@ -1,6 +1,13 @@
 require "cypress-rails/version"
 
 module CypressRails
+  def self.config
+    @config ||= Config.new
+  end
+
+  def self.configure
+    yield config
+  end
 end
 
 require "cypress-rails/init"

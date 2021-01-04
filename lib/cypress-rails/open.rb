@@ -7,7 +7,7 @@ module CypressRails
       @launches_cypress = LaunchesCypress.new
     end
 
-    def call(config = Config.new)
+    def call(config = CypressRails.config)
       @launches_cypress.call("open", config)
     end
   end
