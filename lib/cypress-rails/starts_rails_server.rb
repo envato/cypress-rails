@@ -25,6 +25,17 @@ module CypressRails
             [202, {"Content-Type" => "text/plain"}, ["Accepted"]]
           }
         end
+        map "/cypress_rails_command" do
+          run lambda { |env|
+            request = ActionDispatch::Request.new(env)
+            if CypressRails.config.command_runner
+              response = CypressRails.config.command_runner.call(request.params)
+              [200, {'Content-Type' => 'text/html'}, [response.to_s]]
+            else
+              [500, {'Content-Type' => 'text/html'}, ["CypressRails.config.command_runner hasn't been configured"]]
+            end
+          }
+        end
         map "/" do
           run Rails.application
         end
