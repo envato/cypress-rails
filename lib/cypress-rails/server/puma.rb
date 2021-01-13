@@ -8,7 +8,7 @@ module CypressRails
         # Therefore construct and run the Server instance ourselves.
         # Rack::Handler::Puma.run(app, { Host: host, Port: port, Threads: "0:4", workers: 0, daemon: false }.merge(options))
         default_options = {Host: host, Port: port, Threads: "0:4", workers: 0, daemon: false}
-        options = default_options # .merge(options)
+        options = default_options.merge(CypressRails.config.puma_options)
 
         conf = Rack::Handler::Puma.config(app, options)
         events = ::Puma::Events.stdio
