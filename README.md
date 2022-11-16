@@ -1,7 +1,5 @@
 # cypress-rails
 
-[![CircleCI](https://circleci.com/gh/testdouble/cypress-rails/tree/master.svg?style=svg)](https://circleci.com/gh/testdouble/cypress-rails/tree/master)
-
 This is a simple gem to make it easier to start writing browser tests with
 [Cypress](http://cypress.io) for your [Rails](https://rubyonrails.org) apps,
 regardless of whether your app is server-side rendered HTML, completely
@@ -120,7 +118,7 @@ end
 
 (You can find [an
 example
-initializer](/example/an_app/config/initializers/cypress_rails_initializer.rb)
+initializer](/example/config/initializers/cypress_rails_initializer.rb)
 in this repo.)
 
 The gem also provides a special route on the test server:
@@ -170,7 +168,7 @@ preferred environment variables project-wide using a tool like
   general this means anything done during `cypress open` or `cypress run` will
   be rolled back on exit (similar to running a Rails System test)
 * **CYPRESS_RAILS_CYPRESS_OPTS** (default: _none_) any options you want to
-  forward to the Cypress CLI when running its `open` or `run` commands
+  forward to the Cypress CLI when running its `open` or `run` commands.
 
 #### Example: Running a single spec from the command line
 
@@ -181,6 +179,14 @@ Cypress test would look like this:
 $ CYPRESS_RAILS_CYPRESS_OPTS="--spec cypress/integration/a_test.js" bin/rake cypress:run
 ```
 
+#### Example: Running your tests in Chromium
+
+By default, Cypress will run its tests in its packaged Electron app, unless you've configured it globally. To choose which browser it will run from the command line, try this:
+
+```
+$ CYPRESS_RAILS_CYPRESS_OPTS="--browser chromium" bin/rake cypress:run
+```
+
 ### Initializer hooks
 
 ### before_server_start
@@ -189,6 +195,11 @@ Pass a block to `CypressRails.hooks.before_server_start` to register a hook that
 will execute before the server or any transaction has been started. If you use
 Rails fixtures, it may make sense to load them here, so they don't need to be
 re-inserted for each request
+
+### after_server_start
+
+Pass a block to `CypressRails.hooks.after_server_start` to register a hook that
+will execute after the server has booted.
 
 ### after_transaction_start
 
@@ -215,7 +226,7 @@ of your test database. To set up the hook, pass a block to
 ## Configuring Rails
 
 Beyond the configuration options above, you'll probably also want to disable caching
-in your Rails app's [config/environments/test.rb](/example/an_app/config/environments/test.rb#L9)
+in your Rails app's [config/environments/test.rb](/example/config/environments/test.rb#L9)
 file, so that changes to your Ruby code are reflected in your tests while you
 work on them with `rake cypress:open`. (If either option is set to
 `true`, any changes to your Ruby code will require a server restart to be reflected as you work
@@ -304,7 +315,7 @@ experience. In particular:
   and more information dense than using Capybara and Selenium. Rather than
   running a test from the command line, seeing it fail, then adding a debug
   breakpoint to a test to try to manipulate the browser or tweaking a call to a
-  Capybara API method, failures to be rather obvious when using Cypress and
+  Capybara API method, failures tend to be rather obvious when using Cypress and
   fixing it is usually as easy as tweaking a command, hitting save, and watching
   it re-run
 * With very few exceptions, a Cypress test that works in a browser window will

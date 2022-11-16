@@ -20,7 +20,7 @@ module CypressRails
 
           begin
             connection = ActiveRecord::Base.connection_handler.retrieve_connection(spec_name)
-          rescue ConnectionNotEstablished
+          rescue ActiveRecord::ConnectionNotEstablished
             connection = nil
           end
 
@@ -68,6 +68,10 @@ module CypressRails
     # need to share a connection pool so that the reading connection
     # can see data in the open transaction on the writing connection.
     def setup_shared_connection_pool
+      return unless ActiveRecord::TestFixtures.respond_to?(:setup_shared_connection_pool)
+      @legacy_saved_pool_configs ||= Hash.new { |hash, key| hash[key] = {} }
+      @saved_pool_configs ||= Hash.new { |hash, key| hash[key] = {} }
+
       ActiveRecord::TestFixtures.instance_method(:setup_shared_connection_pool).bind(self).call
     end
   end

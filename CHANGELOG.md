@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 0.5.5
+
+* Add Puma 6 support
+  [#136](https://github.com/testdouble/cypress-rails/pull/136)
+
+## 0.5.4
+
+* Fix Rails 5 support
+  [#126](https://github.com/testdouble/cypress-rails/pull/126)
+
+## 0.5.3
+
+* Fix 2.5 & 2.6 compatibility
+  [#100](https://github.com/testdouble/cypress-rails/issues/100)
+
+## 0.5.2
+
+* Fixes a puma deprecation warning
+  [#95](https://github.com/testdouble/cypress-rails/pull/95)
+
+## 0.5.1
+
+* Sprinkles two instance variables to the custom transaction manager that cribs
+  its implementation from ActiveRecord::TestFixtures (see f75f280)
+  [#88](https://github.com/testdouble/cypress-rails/issues/88)
+  [#89](https://github.com/testdouble/cypress-rails/pull/89)
+
+## 0.5.0
+
+* Add hook `after_server_start`
+  [#63](https://github.com/testdouble/cypress-rails/pull/63)
+* Fix namespace bug
+  [#64](https://github.com/testdouble/cypress-rails/pull/64)
+
 ## 0.4.2
 
 * Add support to Rails 6.1 ([#52](https://github.com/testdouble/cypress-rails/issue/52))

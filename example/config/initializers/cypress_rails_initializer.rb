@@ -1,10 +1,22 @@
 return unless Rails.env.test?
+require "./lib/external_service"
 
 Rails.application.load_tasks unless defined?(Rake::Task)
 
 CypressRails.hooks.before_server_start do
   # Add our fixtures before the resettable transaction is started
   Rake::Task["db:fixtures:load"].invoke
+end
+
+CypressRails.hooks.after_server_start do
+  # After the server has  booted we add the compliment to the existing fixture list!
+  Compliment.create(text: "This shall be the first.")
+  if Compliment.count == 4
+    raise "I cannot run tests without compliments!"
+  end
+
+  # Start up external service
+  ExternalService.start_service
 end
 
 CypressRails.hooks.after_transaction_start do
