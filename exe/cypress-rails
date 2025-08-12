@@ -4,11 +4,11 @@ ENV["RAILS_ENV"] ||= "test"
 require "pathname"
 require "cypress-rails"
 
-env_file = Pathname.new(CypressRails.config.dir).join('cypress/env.rb')
+env_file = Pathname.new(CypressRails.config.rails_dir).join('cypress/env.rb')
 if env_file.exist?
   require env_file
 else
-  require Pathname.new(CypressRails.config.dir).join("config/environment")
+  require Pathname.new(CypressRails.config.rails_dir).join("config/environment")
 end
 
 command = ARGV[0]

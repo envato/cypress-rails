@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 0.7.1
+* Add Rack 3.1 support [#163](https://github.com/testdouble/cypress-rails/pull/163)
+
+## 0.7.0
+git
+* Add a `CYPRESS_RAILS_CYPRESS_DIR` option for cases where
+the cypress tests live outside the CYPRESS_RAILS_DIR [#159](https://github.com/testdouble/cypress-rails/pull/159)
+
+## 0.6.1
+
+* Fix a deprecation warning in Rails
+  [#157](https://github.com/testdouble/cypress-rails/pull/157)
+
+## 0.6.0
+
+* Update initializer task to generate valid Cypress v10+ configurations
+  [#156](https://github.com/testdouble/cypress-rails/pull/156)
+
 ## 0.5.5
 
 * Add Puma 6 support
