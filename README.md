@@ -50,7 +50,7 @@ Once installed, you'll want to run:
 $ rake cypress:init
 ```
 
-This will override a few configurations in your `cypress.json` configuration
+This will override a few configurations in your `cypress.config.js` configuration
 file.
 
 ## Usage
@@ -155,13 +155,14 @@ preferred environment variables project-wide using a tool like
 [dotenv](https://github.com/bkeepers/dotenv).
 
 
-* **CYPRESS_RAILS_DIR** (default: `Dir.pwd`) the directory of your project
+* **CYPRESS_RAILS_DIR** (default: `Dir.pwd`) the directory of your Rails project
+* **CYPRESS_RAILS_CYPRESS_DIR** (default: _same value as `rails_dir`_) the directory of your Cypress project
 * **CYPRESS_RAILS_HOST** (default: `"127.0.0.1"`) the hostname to bind to
 * **CYPRESS_RAILS_PORT** (default: _a random available port_) the port to run
   the Rails test server on
 * **CYPRESS_RAILS_BASE_PATH** (default: `"/"`) the base path for all Cypress's
   requests to the app (e.g. via `cy.visit()`). If you've customized your
-  `baseUrl` setting (e.g. in `cypress.json`), you'll need to duplicate it with
+  `baseUrl` setting (e.g. in `cypress.config.js`), you'll need to duplicate it with
   this environment variable
 * **CYPRESS_RAILS_TRANSACTIONAL_SERVER** (default: `true`) when true, will start
   a transaction on all database connections before launching the server. In

@@ -1,30 +1,32 @@
 module CypressRails
   class Init
-    DEFAULT_CONFIG = {
-      "screenshotsFolder" => "tmp/cypress_screenshots",
-      "videosFolder" => "tmp/cypress_videos",
-      "trashAssetsBeforeRuns" => false
-    }
+    DEFAULT_CONFIG = <<~JS
+      const { defineConfig } = require('cypress')
 
-    def call(dir = Dir.pwd)
-      config_path = File.join(dir, "cypress.json")
-      json = JSON.pretty_generate(determine_new_config(config_path))
-      File.write(config_path, json)
-      puts "Cypress config (re)initialized in #{config_path}"
-    end
+      module.exports = defineConfig({
+        // setupNodeEvents can be defined in either
+        // the e2e or component configuration
+        e2e: {
+          setupNodeEvents(on, config) {
+            on('before:browser:launch', (browser = {}, launchOptions) => {
+              /* ... */
+            })
+          },
+        },
+        screenshotsFolder: "tmp/cypress_screenshots",
+        videosFolder: "tmp/cypress_videos",
+        trashAssetsBeforeRuns: false
+      })
+    JS
 
-    private
-
-    def determine_new_config(config_path)
-      if File.exist?(config_path)
-        merge_existing_with_defaults(config_path)
+    def call(cypress_dir = Config.new.cypress_dir)
+      config_path = File.join(cypress_dir, "cypress.config.js")
+      if !File.exist?(config_path)
+        File.write(config_path, DEFAULT_CONFIG)
+        puts "Cypress config initialized in `#{config_path}'"
       else
-        DEFAULT_CONFIG
+        warn "Cypress config already exists in `#{config_path}'. Skipping."
       end
-    end
-
-    def merge_existing_with_defaults(json_path)
-      JSON.parse(File.read(json_path)).merge(DEFAULT_CONFIG).sort.to_h
     end
   end
 end

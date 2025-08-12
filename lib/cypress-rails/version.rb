@@ -1,3 +1,3 @@
 module CypressRails
-  VERSION = "0.5.5"
+  VERSION = "0.7.1"
 end
